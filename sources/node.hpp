@@ -16,11 +16,22 @@ namespace ariel{
     {
         public:
         node();
+        node(const std::string& name,int level):name(name),level(level){}
+        node(const node& other)
+        {
+            this->childs = other.childs;
+            this->level = other.level;
+            this->name = other.name;
+            this->parent = other.parent;
+        }
+        node(node &&) noexcept;
         ~node(){
                 for (node* c : this->childs) {
                     delete c;
                 }
         }
+        node& operator=(node const&);
+        node& operator=(node&&) noexcept;// move assigemnt operator
         std::string parent;
         std::string name;
         std::vector<node*> childs;

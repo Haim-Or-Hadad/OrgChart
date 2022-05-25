@@ -62,7 +62,10 @@ namespace ariel
     OrgChart &OrgChart::add_sub(const string & person1,const  string& person2)
     {
         this->root_exist();//throw exception if no root 
-        this->empty_string(person1);
+            if (person1.empty())
+            {
+                throw std::runtime_error("empty string");
+            }
         this->parent_exist(*this->_node,person1,person2);
         if (!this->find_parent)
         {
@@ -191,6 +194,12 @@ vector<node*> ve;
     OrgIterator iterator(null_vector);
     return iterator;
     }
+// void OrgChart::empty_string(const string & s){
+//             if (s.empty())
+//             {
+//                 throw std::runtime_error("empty string");
+//             }
+// }
 
     ostream &operator<<(ostream &output,  OrgChart &head)
     {

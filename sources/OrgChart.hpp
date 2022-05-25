@@ -45,14 +45,21 @@ namespace ariel
         node *_node;
         bool find_parent;
         int num_of_nodes;
-
-        public:
-        /*constructor*/
-        OrgChart();
-
         /*vectors that save the order of each iterator*/
         std::vector<node*> order_vector;
         std::vector<node*> null_vector;
+        public:
+        /*constructor*/
+        OrgChart();
+        OrgChart(OrgChart &o)
+        {
+        this->_node = o._node;    
+        this->find_parent = o.find_parent;
+        this->num_of_nodes = o.num_of_nodes;
+        }
+            //copy
+        OrgChart(OrgChart &&) noexcept; // move constructor
+
 
         /**
          * @brief add_ root func get a name and put this name in the head/root of the tree
@@ -93,7 +100,9 @@ namespace ariel
 
         std::string &_output(node &head);
         friend std::ostream &operator<<(std::ostream &output,  OrgChart &head);
-
+        
+        OrgChart& operator=(OrgChart const&);
+        OrgChart& operator=(OrgChart&&) noexcept;// move assigemnt operator
         
         /*inline implements of begin and end iterator's methods*/
         OrgIterator begin() {return begin_level_order();}
@@ -109,7 +118,7 @@ namespace ariel
         {
             this->num_of_nodes++;
         }
-        int get_nodes_len()
+        int  get_nodes_len() const
         {
             return this->num_of_nodes;
         }
@@ -121,14 +130,8 @@ namespace ariel
                  throw std::runtime_error("no root and chart is empty");
             }  
         }
-        void empty_string(const std::string & s)
-        {
-            if (s.empty())
-            {
-                throw std::runtime_error("empty string");
-            }
+        //void empty_string(const std::string & s);
 
-        }
     ~OrgChart();
     };
 }
